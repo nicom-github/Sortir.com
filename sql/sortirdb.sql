@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 16 oct. 2023 à 11:46
+-- Généré le : lun. 16 oct. 2023 à 14:04
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -24,90 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `campus`
---
-
-DROP TABLE IF EXISTS `campus`;
-CREATE TABLE IF NOT EXISTS `campus` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `etat`
---
-
-DROP TABLE IF EXISTS `etat`;
-CREATE TABLE IF NOT EXISTS `etat` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `libelle` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `lieu`
---
-
-DROP TABLE IF EXISTS `lieu`;
-CREATE TABLE IF NOT EXISTS `lieu` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rue` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `latitude` double DEFAULT NULL,
-  `longitude` double DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `messenger_messages`
---
-
-DROP TABLE IF EXISTS `messenger_messages`;
-CREATE TABLE IF NOT EXISTS `messenger_messages` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `headers` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue_name` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` datetime NOT NULL,
-  `available_at` datetime NOT NULL,
-  `delivered_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_75EA56E0FB7336F0` (`queue_name`),
-  KEY `IDX_75EA56E0E3BD61CE` (`available_at`),
-  KEY `IDX_75EA56E016BA31DB` (`delivered_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `participant`
---
-
-DROP TABLE IF EXISTS `participant`;
-CREATE TABLE IF NOT EXISTS `participant` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `roles` json NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nom` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prenom` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telephone` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `actif` tinyint(1) NOT NULL,
-  `administrateur` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_D79F6B11E7927C74` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `sortie`
 --
 
@@ -121,22 +37,26 @@ CREATE TABLE IF NOT EXISTS `sortie` (
   `nb_inscriptions_max` int DEFAULT NULL,
   `infos_sortie` longtext COLLATE utf8mb4_unicode_ci,
   `etat` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `campus_id` int DEFAULT NULL,
+  `lieu_id` int DEFAULT NULL,
+  `etat_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_3C3FD3F2AF5D55E1` (`campus_id`),
+  KEY `IDX_3C3FD3F26AB213CC` (`lieu_id`),
+  KEY `IDX_3C3FD3F2D5E86FF` (`etat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
-
 --
--- Structure de la table `ville`
+-- Contraintes pour les tables déchargées
 --
 
-DROP TABLE IF EXISTS `ville`;
-CREATE TABLE IF NOT EXISTS `ville` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code_postal` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+--
+-- Contraintes pour la table `sortie`
+--
+ALTER TABLE `sortie`
+  ADD CONSTRAINT `FK_3C3FD3F26AB213CC` FOREIGN KEY (`lieu_id`) REFERENCES `lieu` (`id`),
+  ADD CONSTRAINT `FK_3C3FD3F2AF5D55E1` FOREIGN KEY (`campus_id`) REFERENCES `campus` (`id`),
+  ADD CONSTRAINT `FK_3C3FD3F2D5E86FF` FOREIGN KEY (`etat_id`) REFERENCES `etat` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

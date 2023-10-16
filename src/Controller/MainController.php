@@ -9,10 +9,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/login", name="app_login")
+     * @Route("/", name="app_login")
      */
     public function index(): Response
     {
         return $this->render('security/login.html.twig');
     }
+
+
 }
