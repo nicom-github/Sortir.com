@@ -18,12 +18,12 @@ class Lieu
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=30)
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $rue;
 
@@ -59,7 +59,7 @@ class Lieu
         return $this->rue;
     }
 
-    public function setRue(string $rue): self
+    public function setRue(?string $rue): self
     {
         $this->rue = $rue;
 

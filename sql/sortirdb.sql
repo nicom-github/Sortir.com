@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 16 oct. 2023 à 10:04
+-- Généré le : lun. 16 oct. 2023 à 11:46
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `campus` (
 DROP TABLE IF EXISTS `etat`;
 CREATE TABLE IF NOT EXISTS `etat` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `libelle` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -56,8 +56,8 @@ CREATE TABLE IF NOT EXISTS `etat` (
 DROP TABLE IF EXISTS `lieu`;
 CREATE TABLE IF NOT EXISTS `lieu` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nom` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rue` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `latitude` double DEFAULT NULL,
   `longitude` double DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -93,15 +93,16 @@ CREATE TABLE IF NOT EXISTS `messenger_messages` (
 DROP TABLE IF EXISTS `participant`;
 CREATE TABLE IF NOT EXISTS `participant` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `pseudo` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` json NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nom` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `prenom` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `telephone` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mail` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mot_passe` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `administrateur` tinyint(1) NOT NULL,
   `actif` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
+  `administrateur` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_D79F6B11E7927C74` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -115,10 +116,11 @@ CREATE TABLE IF NOT EXISTS `sortie` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_heure_debut` datetime NOT NULL,
-  `dur??e` int DEFAULT NULL,
-  `date_limite_inscription` date NOT NULL,
-  `nb_inscriptions_max` int NOT NULL,
+  `duree` int DEFAULT NULL,
+  `date_limite_inscription` date DEFAULT NULL,
+  `nb_inscriptions_max` int DEFAULT NULL,
   `infos_sortie` longtext COLLATE utf8mb4_unicode_ci,
+  `etat` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -131,8 +133,8 @@ CREATE TABLE IF NOT EXISTS `sortie` (
 DROP TABLE IF EXISTS `ville`;
 CREATE TABLE IF NOT EXISTS `ville` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code_postal` int NOT NULL,
+  `nom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code_postal` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 COMMIT;
