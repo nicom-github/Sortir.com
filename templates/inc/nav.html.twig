@@ -1,6 +1,16 @@
-<nav>
+<nav >
     <ul>
+        {% if is_granted("ROLE_ADMIN") %}
         <li><a href="{{ path('#') }}" title="Villes">Villes</a></li>
         <li><a href="{{ path('#') }}" title="Campus">Campus</a></li>
+
+        {% elseif app.user %}
+        <li><a href="{{ path('#') }}" title="Accueil">Accueil</a></li>
+        <li><a href="{{ path('#') }}" title="Mon Profil">Mon Profil</a></li>
+        <li><a href="{{ path('#') }}" title="Se déconnecter">Se déconnecter</a></li>
+
+        {% endif %}
     </ul>
+
+
 </nav>
