@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+    <div>
+        <h2>Creation sortie</h2>
+    {{ form_start(creationsortieForm) }}
+
+         {{ form_widget(creationsortieForm) }}
+        <button> Enregistrer</button>
+        <button> Publier la sortie</button>
+        <button> Annuler</button>
+    {{ form-end(creationsortieForm) }}
+
+    </div>
+
+
+{% endblock %}
