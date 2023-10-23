@@ -4,21 +4,20 @@ namespace App\Controller;
 
 use App\Entity\Sortie;
 use App\Form\CreationSortieType;
-use App\Repository\CampusRepository;
-use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class Creation extends AbstractController
+class CreationController extends AbstractController
 {
     /**
-     * @Route("/", name="app_creation")
+     * @Route("/creation", name="app_creation")
      */
     public function creation(Request $request): Response
     {
-        $creationsortie = new CreationSortieType();
-        $creationsortieForm =  $this ->createForm(Sortie::class, $creationsortie);
+        $sortie = new Sortie();
+        $creationsortieForm =  $this ->createForm(CreationSortieType::class, $sortie);
 
         // TO DO traiter le formulaire
 

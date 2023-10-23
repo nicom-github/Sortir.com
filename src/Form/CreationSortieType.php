@@ -2,18 +2,20 @@
 
 namespace App\Form;
 
+
 use App\Entity\Campus;
-use App\Entity\Ville;
+use App\Entity\Lieu;
 use App\Entity\Sortie;
-use Cassandra\Date;
-use Symfony\Component\DomCrawler\Field\TextareaFormField;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\ChoiceList\ChoiceList;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Time;
+
 
 class CreationSortieType extends AbstractType
 {
@@ -21,21 +23,18 @@ class CreationSortieType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class)
-            ->add('dateHeureDebut', DateTimeZone::EUROPE, [
+            ->add('dateHeureDebut', DateTimeType::class, [
                 'html5' => true,
             ])
-            ->add('duree', Time::class)
-            ->add('dateLimiteInscription', Date::class)
-            ->add('nbInscriptionsMax', ChoiceType::class, [
-                'choices' => [
-                    ' 1', '2','3','4', ]
-                ])
-            ->add('infosSortie', TextareaFormField::class)
-            ->add('lieu', ChoiceType::class)
-            ->add('campus' , ChoiceList::class)
-            ->add('latitude')
-            ->add('longitude')
-            ->add('ville')
+            ->add('duree', NumberType::class)
+            ->add('dateLimiteInscription', DateType::class)
+            ->add('nbInscriptionsMax', NumberType::class)
+
+            ->add('infosSortie', TextareaType::class)
+            ->add('lieu', EntityType::class, ['class'=> Lieu::class , 'choice_label'=> "nom"])
+            ->add('campus' , EntityType::class, ['class'=> Campus::class])
+
+       # ->add('ville',EntityType::class) # #TO DO dans un second temps #
                  ;
     }
 
