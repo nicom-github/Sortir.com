@@ -105,6 +105,11 @@
                         </td>
                         <td>{{ sortie.organisateur.nom }}</td>
                         <td>
+                            {% if sortie.organisateur.nom == app.user.nom %}
+                                <a href="{{ path('app_modifier',{'id': sortie.id}) }}">Modifier</a>
+                            {% else %}
+                                <a href="{{ path('app_afficher_sortie',{'id': sortie.id}) }}">Afficher</a>
+                            {% endif %}
                             {#
                             Si user = créateur && etat=en création > lien Modifier / Publier
                             Si etat = en cours > lien Afficher

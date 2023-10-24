@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <div class="container p-5">
+        <h1 class="text-center">Afficher une sortie</h1>
+        <div class="container-fluid">
+            <div class="container p-4">
+            <div class="row">
+
+                <div class="col-lg-3">
+                    Nom de la sortie :
+                    <br>
+                    Date et heure de la sortie :
+                    <br>
+                    Date limite d'inscription :
+                    <br>
+                    Nombre de places :
+                    <br>
+                    Durées :
+                    <br>
+                    Description et infos :
+                </div>
+
+                <div class="col-lg-3">
+                    {{ sortie.nom }}
+                    <br>
+                    {{ sortie.dateHeureDebut |date('Y-m-d')}}
+                    <br>
+                    {{ sortie.dateLimiteInscription |date('Y-m-d')}}
+                    <br>
+                    {{ sortie.nbInscriptionsMax }}
+                    <br>
+                    {{ sortie.duree }} minutes
+                    <br>
+                    {{ sortie.infosSortie }}
+                </div >
+
+                <div class="col-lg-2">
+                    Campus :
+                    <br>
+                    Lieu :
+                    <br>
+                    Rue :
+                    <br>
+                    Code postal :
+                    <br>
+                    Latitude :
+                    <br>
+                    Longitude :
+                </div>
+
+                <div class="col-lg-3">
+                   {{ sortie.campus.nom }}
+                    <br>
+                    {{ sortie.lieu.nom }}
+                    <br>
+                    {{ sortie.lieu.rue }}
+                    <br>
+                    {{ sortie.lieu.ville.codePostal }}
+                    <br>
+                    {{ sortie.lieu.latitude }}
+                    <br>
+                    {{ sortie.lieu.longitude }}
+                </div>
+
+                <br>
+                <div class="align-content-center">
+                    <section style="font-size: smaller;">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Pseudo</th>
+                                <th scope="col">Nom</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for participant in sortie.participants %}
+                                <tr>
+                                    {% for user in users %}
+                                    <th scope="row"></th>
+                                    <td> </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+{% endblock %}
