@@ -78,13 +78,10 @@
                             </tr>
                             </thead>
                             <tbody>
-
                             {% for participant in sortie.participants %}
                                 <tr>
-                                    {% for user in users %}
-                                    <th scope="row"></th>
-                                    <td> </td>
-                                    {% endfor %}
+                                    <td> {{ participant.pseudo }}</td>
+                                    <td> {{ participant.nom }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

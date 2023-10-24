@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\data\SearchData;
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -63,10 +64,12 @@ class SortieRepository extends ServiceEntityRepository
     /**
      * @return Sortie[] Returns an array of Sortie objects
      */
-    public function findSearch(SearchData $search): array
+    public function findSearch(SearchData $search,Participant $user): array
     {
         $query = $this
             ->createQueryBuilder('s')
+            ->join('s.etat','e')
+            ->addSelect('e')
             ->orderBy('s.id', 'ASC');
 
         //Recherche par Campus
@@ -86,13 +89,13 @@ class SortieRepository extends ServiceEntityRepository
         //Recherche par date (Start Date)
         if (!empty($search->dateDebut)) {
             $query = $query
-                ->andWhere('s.dateHeureDebut > dateStart')
+                ->andWhere('s.dateHeureDebut > :dateStart')
                 ->setParameter('dateStart', $search->dateDebut);
         }
         //Recherche par date (Stop Date)
         if (!empty($search->dateFin)) {
             $query = $query
-                ->andWhere('s.dateHeureDebut + s.duree < dateStop')
+                ->andWhere('s.dateHeureDebut < :dateStop')
                 ->setParameter('dateStop', $search->dateFin);
         }
 
@@ -101,21 +104,24 @@ class SortieRepository extends ServiceEntityRepository
         if (!empty($search->isOrganisateur)) {
 
             $query = $query
-                ->andWhere('s.organisateur = 5')
+                ->andWhere('s.organisateur = :user')
+                ->setParameter('user',$user)
             ;
         }
 
         //Recherche les sorties auquels je suis inscrit
         if (!empty($search->isInscrit)) {
             $query = $query
-                ->andWhere('s.participants LIKE :user');
+                ->andWhere(':user MEMBER OF s.participants')
+            ->setParameter('user',$user);
 
         }
 
         //Recherche les sorties auquels je ne suis pas inscrit
         if (!empty($search->isNotInscrit)) {
             $query = $query
-                ->andWhere('s.participants LIKE :user');
+                ->andWhere(':user NOT MEMBER OF s.participants')
+                ->setParameter('user',$user);
 
         }
 

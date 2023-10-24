@@ -57,7 +57,7 @@ class ProfilController extends AbstractController
                     'Votre profil a bien été modifié.'
                 );
 
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('app_profil');
         }else{
 
             $string = (string) $form->getErrors(true, false);

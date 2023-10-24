@@ -34,14 +34,14 @@ class SearchForm extends AbstractType
                 'widget' => 'single_text',
                 'required' => false,
                 'label' => false,
-                'mapped' => false,
+
             ])
 
             ->add('dateFin', DateType::class, [
                 'widget' => 'single_text',
                 'label' => false,
                 'required' => false,
-                'mapped' => false,
+
 
             ])
 

@@ -3,9 +3,7 @@ namespace App\data;
 
 use App\Entity\Campus;
 use App\Entity\Sortie;
-use DateTimeInterface;
-use Doctrine\DBAL\Types\DateTimeType;
-use Doctrine\DBAL\Types\DateType;
+use DateTime;
 
 
 class SearchData {
@@ -26,14 +24,14 @@ class SearchData {
     public ?string $sortieNom;
 
     /**
-     * @var DateTimeType
+     *
      */
-    public  DateTimeType $dateDebut;
+    public ?DateTime $dateDebut=null;
 
     /**
-     * @var DateTimeType
+     *
      */
-    public DateTimeType $dateFin;
+    public ?DateTime $dateFin=null;
 
     /**
      * @var boolean

@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+    <form>
+
+        <h2>Modifier une sortie </h2>
+
+        <div class="form-container">
+            <div class="column">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Nom de la sortie</label>
+                    <input type="text" size="25"  id="exampleFormControlInput1"/>
+                </div><br>
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Date&heure de la sortie</label>
+                    <input type="datetime-local" name="datesortie" />
+                </div><br>
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Datelimite d'inscription</label>
+                    <input type="date" name="datelimiteinscription" />
+                </div><br>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Nombre de places</label>
+                    <select  id="exampleFormControlSelect1">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+
+                    </select>
+                </div> <br>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect2">Durée sortie (min)</label>
+                    <select  id="exampleFormControlSelect1">
+                        <option>60</option>
+                        <option>90</option>
+                        <option>120</option>
+                        <option>240</option>
+
+                    </select>
+                </div> <br>
+
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">description et infos</label>
+                    <textarea size="25" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div> <br><br>
+            </div>
+
+            <div class="column">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Campus</label>
+                    <input type="text" value="campus" readonly>
+                </div><br>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Ville</label>
+                    <select  id="exampleFormControlSelect1">
+                        <option>Nantes</option>
+                        <option>Niort</option>
+                        <option>Rennes</option>
+                    </select>
+                </div> <br>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Lieu</label>
+                    <select  id="exampleFormControlSelect1">
+                        <option>Nantes</option>
+                        <option>Niort</option>
+                        <option>Rennes</option>
+                    </select>
+                </div> <br>
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Rue</label>
+                    <input type="text" value="Rue" readonly>
+                </div><br>
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Code postal</label>
+                    <input type="text" value="Code postal" readonly>
+                </div><br>
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Latitude</label>
+                    <input type="number" pattern="[0-9]{1,3}° [0-9]{1,2}' [0-9]{1,2}" placeholder="Format: DD° MM' SS"">
+                </div><br>
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Longitude</label>
+                    <input type="number" pattern="[0-9]{1,3}° [0-9]{1,2}' [0-9]{1,2}" placeholder="Format: DD° MM' SS"">
+                </div><br>
+            </div>
+        </div>
+        <input type="submit" value="Enregistrer">
+        <input type="submit" value="Publier la sortie">
+        <input type="submit" value="Supprimer la sortie">
+        <input type="submit" value="Annuler">
+    </form>
+
+{% endblock %}

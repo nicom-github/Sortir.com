@@ -11,7 +11,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/", name="app_login")
+     * @Route("/login", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -33,6 +33,6 @@ class SecurityController extends AbstractController
      */
     public function logout(): RedirectResponse
     {
-        return $this->redirectToRoute('app_login');
+         throw new \LogicException('Message !-');
     }
 }

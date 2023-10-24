@@ -15,7 +15,7 @@ class MainController extends AbstractController
 {
 
     /**
-     * @Route("/index", name="app_main_index")
+     * @Route("/", name="app_main_index")
      */
     public function index(
         Request $request,
@@ -27,16 +27,16 @@ class MainController extends AbstractController
 
         //Appel SearchData
         $data = new SearchData();
+        $data->campus =$this->getUser()->getCampus();
         $form = $this->createForm(SearchForm::class, $data);
         $form->handleRequest($request);
 
         //va chercher les infos en bdd
-        $campus = $campusRepository->findCampus();
-        $sorties = $sortieRepository->findSearch($data);
+        $sorties = $sortieRepository->findSearch($data,$this->getUser());
+
 
         return $this->render('main/index.html.twig', [
             "sorties"=>$sorties,
-            "campus"=>$campus,
             'SearchForm' => $form->createView()
         ]);
     }
