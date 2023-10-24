@@ -12,18 +12,51 @@
         </div>
     {% endif %}
 
-    <h1>Mon profil</h1>
-    {{ form_start(profilForm) }}
-    {{ form_row(profilForm.pseudo) }}
-    {{ form_row(profilForm.prenom) }}
-    {{ form_row(profilForm.nom) }}
-    {{ form_row(profilForm.telephone) }}
-    {{ form_row(profilForm.email) }}
-    {{ form_row(profilForm.plainPassword) }}
-    {{ form_row(profilForm.campus ) }}
+    <div class="container p-5">
+        <div class="container-fluid">
 
-    <button type="submit">Enregistrer</button>
+            <div class="row">
+                <div class="col col-sm-12 d-flex justify-content-center">
+                    <h1>Mon profil</h1>
+                </div>
+            </div>
 
-    {{ form_end(profilForm) }}
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-6">
+                    {% if user.image != null %}
+                        <img src="{{ asset('img/' ~ user.image) }}" class="rounded mx-auto d-block"
+                             alt="profile picture" height="300" width="300">
+                    {% else %}
+                        <img src="{{ asset('img/user.png') }}" class="rounded mx-auto d-block"
+                             alt="profile picture" height="300" width="300">
+                    {% endif %}
+                </div>
+                <br>
+                <div class="col-12 col-sm-12 col-md-6">
+                    <div>
+                        <p>{{ form_start(profilForm) }}</p>
+                        {{ form_row(profilForm.pseudo) }}
+                        {{ form_row(profilForm.prenom) }}
+                        {{ form_row(profilForm.nom) }}
+                        {{ form_row(profilForm.telephone) }}
+                        {{ form_row(profilForm.email) }}
+                        {{ form_row(profilForm.plainPassword) }}
+                        {{ form_row(profilForm.campus ) }}
+                        {{ form_row(profilForm.image ) }}
+
+                    </div>
+                    <button class="btn btn-primary" type="submit">Enregistrer</button>
+                    <a href="{{ path('app_main_index') }}" class="btn btn-primary" role="button">
+                        Annuler
+                    </a>
+                    {{ form_end(profilForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 
 {% endblock %}

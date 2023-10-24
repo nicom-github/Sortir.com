@@ -17,11 +17,11 @@ class ParticipantController extends AbstractController
         ParticipantRepository $participantRepository
     ): Response
     {
-        $partcipant = $participantRepository->find($id);
+        $participant = $participantRepository->find($id);
 
-        return $this->render('participant/index.html.twig', [
+        return $this->render('participant/participant.html.twig', [
             'controller_name' => 'ParticipantController',
-            'participant'=>$partcipant
+            'participant'=>$participant
 
         ]);
     }

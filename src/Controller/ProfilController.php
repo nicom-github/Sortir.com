@@ -8,10 +8,12 @@ use App\Repository\CampusRepository;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProfilController extends AbstractController
 {
@@ -22,7 +24,8 @@ class ProfilController extends AbstractController
      ParticipantRepository $participantRepository,
      UserPasswordHasherInterface $userPasswordHasher,
      EntityManagerInterface  $entityManager,
-      CampusRepository  $campusRepository
+      CampusRepository  $campusRepository,
+                           SluggerInterface $slugger
     ): Response
     {
 
@@ -36,13 +39,25 @@ class ProfilController extends AbstractController
 
         // Vérification du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setMotPasse(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+
+            // Ajout de la photo
+            $image= $form->get('image')->getData();
+
+            if ($image) {
+                $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
+                try {
+                    $image->move(
+                        $this->getParameter('img_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                $user->setImage($newFilename);
+            }
 
             $entityManager->persist($user);
             $entityManager->flush();
