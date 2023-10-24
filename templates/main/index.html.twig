@@ -61,9 +61,14 @@
 
                 <div class="col-lg-1">
                     <button type="submit" class="btn btn-primary btn-lg"> Rechercher</button>
+                    {{ form_end(SearchForm) }}
+
+                    <br><br>
+                    <a href="{{ path('app_creation') }}">
+                        <button class="btn btn-primary btn-lg">Créer une sortie</button>
+                    </a>
                 </div>
 
-                {{ form_end(SearchForm) }}
             </div>
         </div>
     </div>

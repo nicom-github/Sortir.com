@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+    <div>
+        <h2>Creation sortie</h2>
+    {{ form_start(creationsortie) }}
+
+         {{ form_widget(creationsortie.nom) }}
+        {{ form_widget(creationsortie.dateHeureDebut) }}
+        {{ form_widget(creationsortie.duree) }}
+        {{ form_widget(creationsortie.dateLimiteInscription) }}
+        {{ form_widget(creationsortie.nbInscriptionsMax) }}
+        {{ form_widget(creationsortie.infosSortie) }}
+        {{ form_widget(creationsortie.lieu) }}
+        {{ form_widget(creationsortie.campus) }}
+        <button> Enregistrer</button>
+        <button> Publier la sortie</button>
+        <button> Annuler</button>
+
+        {{ form_end(creationsortie) }}
+
+    </div>
+
+
+{% endblock %}
