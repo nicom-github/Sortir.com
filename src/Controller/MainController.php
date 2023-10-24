@@ -2,33 +2,42 @@
 
 namespace App\Controller;
 
+use App\data\SearchData;
+use App\Form\SearchForm;
+use App\Repository\CampusRepository;
 use App\Repository\SortieRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
-    /**
-     * @Route("/", name="app_login")
-     */
-    public function login(): Response
-    {
-        return $this->render('security/login.html.twig');
-    }
 
     /**
-     * @Route("/", name="app_main_index")
+     * @Route("/index", name="app_main_index")
      */
-    public function index(SortieRepository $sortieRepository): Response
-    {
-        //va chercher toutes les Sorties en bdd
-        $sorties = $sortieRepository->findSortie();
+    public function index(
+        Request $request,
+        SortieRepository $sortieRepository,
+        CampusRepository $campusRepository
 
-        //Test si le user est inscrit dans des sorties
+    ): Response
+    {
+
+        //Appel SearchData
+        $data = new SearchData();
+        $form = $this->createForm(SearchForm::class, $data);
+        $form->handleRequest($request);
+
+        //va chercher les infos en bdd
+        $campus = $campusRepository->findCampus();
+        $sorties = $sortieRepository->findSearch($data);
 
         return $this->render('main/index.html.twig', [
-            "sorties"=>$sorties
+            "sorties"=>$sorties,
+            "campus"=>$campus,
+            'SearchForm' => $form->createView()
         ]);
     }
 

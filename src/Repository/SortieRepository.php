@@ -2,9 +2,16 @@
 
 namespace App\Repository;
 
+use App\data\SearchData;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use http\Client\Curl\User;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 /**
  * @extends ServiceEntityRepository<Sortie>
@@ -19,6 +26,8 @@ class SortieRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Sortie::class);
+
+
     }
 
     public function add(Sortie $entity, bool $flush = false): void
@@ -39,18 +48,89 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Sortie[] Returns an array of Sortie objects
-//     */
+    /**
+     * @return Sortie[] Returns an array of Sortie objects
+     */
     public function findSortie(): array
     {
         return $this->createQueryBuilder('s')
             ->orderBy('s.id', 'ASC')
             //->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
+
+    /**
+     * @return Sortie[] Returns an array of Sortie objects
+     */
+    public function findSearch(SearchData $search): array
+    {
+        $query = $this
+            ->createQueryBuilder('s')
+            ->orderBy('s.id', 'ASC');
+
+        //Recherche par Campus
+        if (!empty($search->campus)) {
+            $query = $query
+                ->andWhere('s.campus IN (:campus)')
+                ->setParameter('campus', $search->campus);
+        }
+
+        //Recherche par nom de sortie
+        if (!empty($search->sortieNom)) {
+            $query = $query
+                ->andWhere('s.nom LIKE :sortieNom')
+                ->setParameter('sortieNom', "%{$search->sortieNom}%");
+        }
+
+        //Recherche par date (Start Date)
+        if (!empty($search->dateDebut)) {
+            $query = $query
+                ->andWhere('s.dateHeureDebut > dateStart')
+                ->setParameter('dateStart', $search->dateDebut);
+        }
+        //Recherche par date (Stop Date)
+        if (!empty($search->dateFin)) {
+            $query = $query
+                ->andWhere('s.dateHeureDebut + s.duree < dateStop')
+                ->setParameter('dateStop', $search->dateFin);
+        }
+
+
+        //Recherche les sorties dont je suis organisateur
+        if (!empty($search->isOrganisateur)) {
+
+            $query = $query
+                ->andWhere('s.organisateur = 5')
+            ;
+        }
+
+        //Recherche les sorties auquels je suis inscrit
+        if (!empty($search->isInscrit)) {
+            $query = $query
+                ->andWhere('s.participants LIKE :user');
+
+        }
+
+        //Recherche les sorties auquels je ne suis pas inscrit
+        if (!empty($search->isNotInscrit)) {
+            $query = $query
+                ->andWhere('s.participants LIKE :user');
+
+        }
+
+        //Recherche les sorties en statut fini
+        if (!empty($search->isSortiesFinie)) {
+            $query = $query
+                ->andWhere('s.etat = 5');
+        }
+
+        return $query
+            ->getQuery()
+            ->getResult();
+    }
+
+
 
 //    public function findOneBySomeField($value): ?Sortie
 //    {
@@ -61,4 +141,5 @@ class SortieRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 }

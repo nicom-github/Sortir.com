@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>{% block title %}Sortir.com{% endblock %}</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.css') }}">
@@ -18,19 +20,21 @@
 </head>
 <body>
 <div class="container">
-    <header class="navbar navbar-light bg-light">
+    <header>
+        <div class="navbar navbar-light bg-light">
+
         <h1><img src="{{ asset('#') }}" alt="Logo Sortir.com"></h1>
 
-        {{ include('inc/nav.html.twig') }}
-
-        {% if app.user %}
-            <p>Date du jour : {{ "now"|date('d/m/y') }}</p>
-            <p>{{ app.user.prenom }} {{ app.user.nom }} </p>
-        {% endif %}
-
+       {{ include('inc/nav.html.twig') }}
+        </div>
     </header>
+    <div class="position-absolute" style="right: 100px">
+        {% if app.user %}
+            <p>Date du jour : {{ "now"|date('d/m/y') }} - {{ app.user.prenom }} {{ app.user.nom }}</p>
+        {% endif %}
+    </div>
 
-    <main class="container p-4">
+    <main class="container p-6">
         {% block body %}{% endblock %}
     </main>
 

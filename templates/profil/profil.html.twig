@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+
+    {% if app.session.flashBag.has('ajouteParticipant') %}
+        <div class="alert alert-fail">
+            {% for msg in app.session.flashBag.get('ajouteParticipant') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <h1>Mon profil</h1>
+    {{ form_start(profilForm) }}
+    {{ form_row(profilForm.pseudo) }}
+    {{ form_row(profilForm.prenom) }}
+    {{ form_row(profilForm.nom) }}
+    {{ form_row(profilForm.telephone) }}
+    {{ form_row(profilForm.email) }}
+    {{ form_row(profilForm.motPasse) }}
+    <div>
+        <label for="pass">Vérification:</label>
+        <input type="password" id="pass" name="password" minlength="8" required />
+    </div>
+    {{ form_row(profilForm.campus ) }}
+
+    <button type="submit">Enregistrer</button>
+
+    {{ form_end(profilForm) }}
+
+{% endblock %}

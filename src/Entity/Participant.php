@@ -124,7 +124,6 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         return $this->administrateur ? ['ROLE_ADMIN']:['ROLE_USER'];
-
     }
 
     /**

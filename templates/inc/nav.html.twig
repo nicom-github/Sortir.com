@@ -1,16 +1,30 @@
-<nav >
-    <ul>
-        {% if is_granted("ROLE_ADMIN") %}
-        <li><a href="{{ path('#') }}" title="Villes">Villes</a></li>
-        <li><a href="{{ path('#') }}" title="Campus">Campus</a></li>
+<nav>
+    <div class="container-fluid">
+        <div class="btn-group">
+            <ul class="m-md-4">
 
-        {% elseif app.user %}
-        <li><a href="{{ path('#') }}" title="Accueil">Accueil</a></li>
-        <li><a href="{{ path('#') }}" title="Mon Profil">Mon Profil</a></li>
-        <li><a href="{{ path('#') }}" title="Se déconnecter">Se déconnecter</a></li>
-
-        {% endif %}
-    </ul>
-
+                {% if is_granted("ROLE_ADMIN") %}
+                    <div class="d-inline dropdown ">
+                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Administration
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="m-md-4" href="{{ path('app_main_index') }}" title="Villes">Villes</a>
+                            <a class="m-md-4" href="{{ path('app_main_index') }}" title="Campus">Campus</a>
+                            <a class="m-md-4" href="{{ path('app_register') }}" title="Participant">Participant</a>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="d-inline">
+                    {% if app.user %}
+                        <a class="m-md-4" href="{{ path('app_main_index') }}" title="Accueil">Accueil</a>
+                        <a class="m-md-4" href="{{ path('app_main_index') }}" title="Mon Profil">Mon Profil</a>
+                        <a href="{{ path('app_logout') }}" title="Se déconnecter">Se déconnecter</a>
+                    {% endif %}
+                </div>
+            </ul>
+        </div>
+    </div>
 
 </nav>
