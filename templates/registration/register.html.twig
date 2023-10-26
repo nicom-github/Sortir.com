@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
 
@@ -12,20 +12,46 @@
         </div>
     {% endif %}
 
-    <h1>Register</h1>
-    {{ form_start(registrationForm) }}
-    {{ form_row(registrationForm.nom) }}
-    {{ form_row(registrationForm.prenom) }}
-    {{ form_row(registrationForm.pseudo) }}
-    {{ form_row(registrationForm.email) }}
-    {{ form_row(registrationForm.plainPassword, {
-        label: 'Password'
-    }) }}
-    {{ form_row(registrationForm.campus) }}
-    {{ form_row(registrationForm.actif) }}
-    {{ form_row(registrationForm.administrateur) }}
+    <div class="container">
+        <h1 class="text-center">Créer un participant</h1>
+        <div class="container-fluid">
+            <div class="container p-4 align-content-center">
+                <div class="row">
 
-    <button type="submit" class="btn-primary">Register</button>
-    {{ form_end(registrationForm) }}
+                    <div class="col-lg-3 align-content-center">
+                    </div>
+                    <div class="col-lg-2 align-content-center">
+                        <p>Nom : </p>
+                        <p>Prénom : </p>
+                        <p>Pseudo : </p>
+                        <br>
+                        <p>Email : </p>
+                        <p>Mot de passe : </p>
+                        <p>Campus : </p>
+
+                    </div>
+
+                    <div class="col-lg-3 align-content-center">
+                        {{ form_start(registrationForm) }}
+                        {{ form_row(registrationForm.nom) }}
+                        <p>{{ form_row(registrationForm.prenom) }}</p>
+                        <p> {{ form_row(registrationForm.pseudo) }}</p>
+                        <p> {{ form_row(registrationForm.email) }}</p>
+                        <p>{{ form_row(registrationForm.plainPassword)}}</p>
+                        <p>  {{ form_row(registrationForm.campus) }}</p>
+                        <p> {{ form_row(registrationForm.actif) }}</p>
+                        <p> {{ form_row(registrationForm.administrateur) }}</p>
+
+
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>
+                    {{ form_end(registrationForm) }}
+                    <a href="{{ path('app_main_index') }}"><button  class="btn btn-primary">Annuler</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

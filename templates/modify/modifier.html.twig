@@ -29,7 +29,7 @@
                     <p>Date et heure de la sortie : {{ form_widget(creationsortie.dateHeureDebut) }}</p>
                     <p>Date limite d'inscription : {{ form_widget(creationsortie.dateLimiteInscription) }}</p>
                     <p>Nombre de places : {{ form_widget(creationsortie.nbInscriptionsMax) }}</p>
-                    <p>Durée : {{ form_widget(creationsortie.duree) }}</p>
+                    <p>Durée : {{ form_widget(creationsortie.duree) }} minutes</p>
                     <p>Description et infos : {{ form_widget(creationsortie.infosSortie) }}</p>
 
                 </div>
@@ -48,7 +48,7 @@
                 </div>
 
                 <div>
-                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>
                     {{ form_end(creationsortie) }}
                     <button class="btn btn-primary"> Publier la sortie</button>
                     <a href="{{ path('app_supprimerSortie', {'id':  sortieId }) }}"><button class="btn btn-primary"> Supprimer la sortie</button></a>

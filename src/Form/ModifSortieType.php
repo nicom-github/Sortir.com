@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -35,7 +36,11 @@ class ModifSortieType extends AbstractType
                 'required' => false,
 
             ])
-            ->add('duree', NumberType::class)
+            ->add('duree', ChoiceType::class,
+                array(
+                    'choices' => range(1, 360),
+                )
+            )
             ->add('nbInscriptionsMax', NumberType::class)
             ->add('infosSortie', TextareaType::class)
 

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Form\AnnulerSortieType;
 use App\Form\ModifSortieType;
 use App\Repository\LieuRepository;
 use App\Repository\ParticipantRepository;
@@ -57,7 +58,8 @@ class ModificationController extends AbstractController
                     'La nouvelle sortie a bien été modifiée.'
                 );
 
-            return $this->redirectToRoute('app_creation');
+            return $this->redirectToRoute('app_modifier',array(
+                'id' =>$id));
         }else{
 
             $string = (string) $form->getErrors(true, false);
@@ -84,6 +86,43 @@ class ModificationController extends AbstractController
     }
 
     /**
+     * @Route("/annulerSortie{id}", name="app_annulerSortie")
+     */
+    public function annuler(
+        int $id,
+        SortieRepository $sortieRepository,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        VilleRepository $villeRepository,
+        LieuRepository $lieuRepository
+
+    ): Response
+    {
+
+        $sortie = $sortieRepository->find($id);
+        $lieux = $lieuRepository->findLieu();
+        $villes = $villeRepository->findAll();
+        $campus = $this->getUser()->getCampus();
+        $user = $this->getUser();
+        $sortie->setOrganisateur($user);
+
+        $form = $this->createForm(AnnulerSortieType::class, $sortie);
+        $form->handleRequest($request);
+
+
+        return $this->render('annuler/annuler.html.twig', [
+            'annulationsortie' => $form -> createView(),
+            'lieux'=> $lieux,
+            'campus'=>$campus,
+            'villes'=>$villes,
+            'sortieId'=>$id,
+            'sortie'=>$sortie
+
+        ]);
+
+    }
+
+    /**
      * @Route("/suppressionSortie{id}", name="app_supprimerSortie")
      */
     public function suppression(
@@ -103,13 +142,13 @@ class ModificationController extends AbstractController
      */
     public function inscription(
         int $id,
-        Participant $participant,
         SortieRepository $sortieRepository
     )
     {
         $sortie = $sortieRepository->find($id);
-        $participant->addInscription($sortie);
-        return $this->redirectToRoute('app_afficher_sortie',[$id]);
+        //$participant->addInscription($sortie);
+        return $this->redirectToRoute('app_afficher_sortie',array(
+            'id' =>$id));
 
     }
 
@@ -135,14 +174,15 @@ class ModificationController extends AbstractController
      */
     public function publier(
         int $id,
-        SortieRepository $sortieRepository,
-        Etat $etat
+        SortieRepository $sortieRepository
+
     )
     {
 
         $sortie = $sortieRepository->find($id);
-        $sortie->setEtat($etat->getId(1));
-        return $this->redirectToRoute('app_afficher_sortie',[$id]);
+        //$sortie->setEtat($etat->getId(1));
+        return $this->redirectToRoute('app_afficher_sortie',array(
+            'id' =>$id));
 
     }
 

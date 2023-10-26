@@ -16,6 +16,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -46,15 +47,17 @@ class CreationSortieType extends AbstractType
                 'required' => false,
 
             ])
-            ->add('duree', NumberType::class)
+            ->add('duree', ChoiceType::class,
+                array(
+                    'choices' => range(1, 360),
+                )
+            )
             ->add('nbInscriptionsMax', NumberType::class)
             ->add('infosSortie', TextareaType::class)
-
             ->add('lieu', EntityType::class,
                 ['class' => Lieu::class, 'choice_label' => 'nom'
 
                 ])
-
             ->add('etat', EntityType::class,
                 ['class' => Etat::class,
 
@@ -65,8 +68,7 @@ class CreationSortieType extends AbstractType
                     },
                     'choice_label' => 'libelle',
 
-                ])
-;
+                ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <div class="container p-5">
+        <h1 class="text-center">Annuler une sortie</h1>
+        <div class="container-fluid">
+            <div class="container p-4 align-content-center">
+                <div class="row">
+
+                    <div class="col-lg-3 align-content-center">
+                    </div>
+                    <div class="col-lg-3 align-content-center">
+                        <p>Nom de la sortie : </p>
+                        <p>Date et heure de la sortie :</p>
+                        <p>Campus :</p>
+                        <p>Lieu :</p>
+                        <p>Motif :</p>
+                    </div>
+
+                    <div class="col-lg-3 align-content-center">
+                        <p>{{ sortie.nom }}</p>
+                        <p>{{ sortie.dateHeureDebut|date('Y-m-d') }}</p>
+                        <p>{{ sortie.campus.nom }}</p>
+                        <p>{{ sortie.lieu.nom }}</p>
+                        {{ form_start(annulationsortie) }}
+                        <p>{{ form_widget(annulationsortie.infosSortie) }}</p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    {{ form_end(annulationsortie) }}
+                    <a href="{{ path('app_main_index') }}"><button  class="btn btn-primary">Annuler</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
