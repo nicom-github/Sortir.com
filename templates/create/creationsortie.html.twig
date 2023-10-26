@@ -3,24 +3,59 @@
 {% block title %}Hello MainController!{% endblock %}
 
 {% block body %}
+
+    {% if app.session.flashBag.has('creationSortie') %}
+        <div class="alert alert-fail">
+            {% for msg in app.session.flashBag.get('creationSortie') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <div>
-        <h2>Creation sortie</h2>
-    {{ form_start(creationsortie) }}
+    <h2 class="text-center">Creation sortie</h2>
+    </div>
 
-         {{ form_widget(creationsortie.nom) }}
-        {{ form_widget(creationsortie.dateHeureDebut) }}
-        {{ form_widget(creationsortie.duree) }}
-        {{ form_widget(creationsortie.dateLimiteInscription) }}
-        {{ form_widget(creationsortie.nbInscriptionsMax) }}
-        {{ form_widget(creationsortie.infosSortie) }}
-        {{ form_widget(creationsortie.lieu) }}
-        {{ form_widget(creationsortie.campus) }}
-        <button> Enregistrer</button>
-        <button> Publier la sortie</button>
-        <button> Annuler</button>
+    <div class="container p-5">
+        <div class="container-fluid">
 
-        {{ form_end(creationsortie) }}
+            <div class="row">
 
+                <div class="col-12 col-sm-12 col-md-6">
+
+                    {{ form_start(creationsortie) }}
+
+                    <p>Nom de la sortie : {{ form_widget(creationsortie.nom) }}</p>
+                    <p>Date et heure de la sortie : {{ form_widget(creationsortie.dateHeureDebut) }}</p>
+                    <p>Date limite d'inscription : {{ form_widget(creationsortie.dateLimiteInscription) }}</p>
+                    <p>Nombre de places : {{ form_widget(creationsortie.nbInscriptionsMax) }}</p>
+                    <p>Durée : {{ form_widget(creationsortie.duree) }}</p>
+                    <p>Description et infos : {{ form_widget(creationsortie.infosSortie) }}</p>
+
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-6">
+                    <p>Campus : {{ form_widget(creationsortie.campus) }}</p>
+                    <p>Villes</p>
+                    <p>Lieux : {{ form_widget(creationsortie.lieu) }}</p>
+                    <p>Rue</p>
+                    <p>Code postal</p>
+                    <p>Latitude</p>
+                    <p>Longitude</p>
+                    <p hidden="hidden">Etat : {{ form_widget(creationsortie.etat) }}</p>
+
+                </div>
+
+                <div>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    {{ form_end(creationsortie) }}
+                    <button class="btn btn-primary"> Publier la sortie</button>
+                    <a href="{{ path('app_main_index') }}"><button  class="btn btn-primary">Annuler</button></a>
+                </div>
+
+
+            </div>
+        </div>
     </div>
 
 

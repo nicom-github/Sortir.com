@@ -81,6 +81,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    //Enregistrement participants depuis un fichier CSV
     public function registerCSV(
         EntityManagerInterface $em,
         UserPasswordHasherInterface $userPasswordHasher,
