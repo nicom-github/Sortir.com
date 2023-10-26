@@ -81,6 +81,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    //----------------------------------------------------------------------------
     //Enregistrement participants depuis un fichier CSV
     public function registerCSV(
         EntityManagerInterface $em,
@@ -89,8 +90,8 @@ class RegistrationController extends AbstractController
     {
 
         //Vérif
-        if (count($data) == 0 || count($data) == 1 || is_null($data)) {
-            $this->addFlash('success', 'Aucun membre dans la liste à insérer');
+        if (count($data) < 5 || is_null($data)) {
+            $this->addFlash('ERREUR!', 'Aucun membre dans la liste à insérer');
             return $this->redirectToRoute('app_register');
         }
 
@@ -131,7 +132,7 @@ class RegistrationController extends AbstractController
 
             //Persist:
             $em->persist($user);
-            $this->addFlash('error', $nom . ' : inscrit avec succès !');
+            $this->addFlash('Le user : ', $nom . ' : est inscrit avec succès !');
         }
 
         $em->flush();

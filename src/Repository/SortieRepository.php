@@ -28,7 +28,6 @@ class SortieRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Sortie::class);
 
-
     }
 
     public function add(Sortie $entity, bool $flush = false): void

@@ -16,7 +16,7 @@
     <h2 class="text-center">Creation sortie</h2>
     </div>
 
-    <div class="container p-5">
+    <div class="container">
         <div class="container-fluid">
 
             <div class="row">
@@ -35,10 +35,13 @@
                 </div>
 
                 <div class="col-12 col-sm-12 col-md-6">
-                    <p>Campus : {{ form_widget(creationsortie.campus) }}</p>
-                    <p>Villes</p>
-                    <p>Lieux : {{ form_widget(creationsortie.lieu) }}</p>
-                    <p>Rue</p>
+                    <p>Campus : {{ campus.nom }}</p>
+
+                    <p>Ville :</p>
+
+                    <p>Lieux : {{ form_widget(creationsortie.lieu, {'attr': {'choice_label': 'nom'}}) }}</p>
+
+                    <p>Rue :</p>
                     <p>Code postal</p>
                     <p>Latitude</p>
                     <p>Longitude</p>

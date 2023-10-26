@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\data\SearchData;
 use App\Entity\Etat;
 use App\Entity\Ville;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Form\CreationSortieType;
+use App\Repository\CampusRepository;
 use App\Repository\LieuRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,13 +31,15 @@ class CreationController extends AbstractController
     {
 
         $lieux = $lieuRepository->findLieu();
+        $villes = $villeRepository->findAll();
+        $campus = $this->getUser()->getCampus();
 
         $user = $this->getUser();
 
 
         $sortie = new Sortie();
         $sortie->setOrganisateur($user);
-        //$sortie->setEtat();
+        $sortie->setCampus($campus);
 
         $creationsortieForm =  $this ->createForm(CreationSortieType::class, $sortie);
         $creationsortieForm->handleRequest($request);
@@ -76,7 +80,9 @@ class CreationController extends AbstractController
 
         return $this->render('create/creationsortie.html.twig', [
             'creationsortie' => $creationsortieForm -> createView(),
-           'lieux'=> $lieux
+           'lieux'=> $lieux,
+            'campus'=>$campus,
+            'villes'=>$villes
 
         ]);
     }
