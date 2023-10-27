@@ -138,7 +138,7 @@ class ModificationController extends AbstractController
 
 
     /**
-     * @Route("/inscriptionSortie{id}", name="app_inscriptionSortie")
+     * @Route("/inscriptionSortie/{id}", name="app_inscriptionSortie")
      */
     public function inscription(
         int $id,
@@ -154,7 +154,7 @@ class ModificationController extends AbstractController
 
 
     /**
-     * @Route("/seDesisterSortie{id}", name="app_seDesisterSortie")
+     * @Route("/seDesisterSortie/{id}", name="app_seDesisterSortie")
      */
     public function seDesister(
         int $id,
